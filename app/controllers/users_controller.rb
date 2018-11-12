@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if @user.valid?
       @token = encode_token(user_id: @user.id)
       GoogleCivicsApi.get_officials(@user)
-      render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
+      render json: @user, jwt: @token, status: :created
     else
       render json: { error: 'failed to create user' }, status: :not_acceptable
     end
