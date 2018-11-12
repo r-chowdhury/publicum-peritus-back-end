@@ -1,7 +1,6 @@
 class GoogleCivicsApi
 
   def self.get_officials(user)
-    
     url = self.create_api_url(user)
     response = RestClient.get(url)
     parsed_data = JSON.parse(response)
@@ -14,16 +13,13 @@ class GoogleCivicsApi
   
   def self.create_api_url(user)
     url = "https://www.googleapis.com/civicinfo/v2/representatives?address="
-    address_array = user.address.split
+    address_array = user.full_address.split(/\W+/)
     url += address_array[0]
     address_array[1.. -1].each do |address|
       url += "%20#{address}"
     end 
-    url += "%2C%20#{user.city}"
-    url += "%2C%20#{user.state}"
-    url += "%2C%20#{user.zip}"
     url += "&includeOffices=true&key=#{ENV["civics_api_key"]}"
-    url
+    return url
   end 
 
   def self.create_address_url(address)
