@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     users_politicians = User.all.map do |user|
       user.politicians 
     end 
-    render json: users, include: [ :politicians]
+    render json: users, include: [:politicians]
   end 
 
 
